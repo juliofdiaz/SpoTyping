@@ -183,7 +183,15 @@ class Main:
 class querySITVIT:
     def post(self, url, data):
         req = urllib.request.Request(url)
-        data = urllib.parse.urlencode(data)
+        data = urllib.parse.urlencode(data).encode("utf-8")
+
+        with urllib.request.urlopen(req,data=data) as f:
+            return f.read()
+            #resp = f.read()
+            #print(resp)
+      
+        #req = urllib.request.Request(url)
+        #data = urllib.parse.urlencode(data)
         opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor())
         response = opener.open(req, data, timeout=500)
         return response.read()
